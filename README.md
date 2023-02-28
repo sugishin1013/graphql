@@ -12,6 +12,10 @@ Supabase 上で作成したデータに GraphQL API でアクセスしてみま�
 
 3. Next.js 上で[Get started with Apollo Client](https://www.apollographql.com/docs/react/get-started)のドキュメントのテストコードを記述し、データが取得できることを確認
 
+## todo リスト作成
+
+1. シンプルな todo リストの mock を作成
+
 ## Getting Started
 
 First, run the development server:
@@ -25,6 +29,10 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Mock References
+
+https://tailwindcomponents.com/component/todo-list-app
 
 ## References
 
