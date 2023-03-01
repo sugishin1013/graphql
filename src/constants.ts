@@ -15,3 +15,23 @@ export const todosQuery = gql(`
       }
     }
 `);
+
+export const todosInsertMutation = gql(`
+    mutation TodoInsertMutation($objects: [todosInsertInput!]!) {
+      insertIntotodosCollection(objects: $objects) {
+        records {
+          text
+        }
+      }
+    }
+`);
+
+export const todosDeleteMutation = gql(`
+    mutation TodoDeleteMutation($id: Int!) {
+      deleteFromtodosCollection(filter: {id: {eq: $id}}) {
+          records {
+            text
+        }
+      }
+    }
+`);

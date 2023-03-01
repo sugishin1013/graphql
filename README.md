@@ -20,17 +20,17 @@ Supabase 上で作成したデータに GraphQL API でアクセスしてみま�
 
 ```
 create table todos (
-    id integer primary key,
+    id integer generated always as identity not null,
     text text
 );
 ```
 
 ```
-insert into public.todos
+insert into public.todos (text)
 values
-  (1,'予定1'),
-  (2,'予定2'),
-  (3,'予定3');
+  ('予定1'),
+  ('予定2'),
+  ('予定3');
 ```
 
 3. 上記 Typescript 用の型を自動作成し、GraphQL API でダミーデータを取得できることを確認
@@ -41,7 +41,11 @@ values
 
 1. `/src/pages/api/todos/queries.ts`ファイルを作成し、GraphQL API の接続テスト用の処理をこのファイルに移行
 
-2. `http://localhost:3000/api/todos/queries`にブラウザ上でアクセスし、DB に登録したダミーデータが取得できることを確認
+2. `http://localhost:3000/api/todos/list`にブラウザ上でアクセスし、DB に登録したダミーデータが取得できることを確認
+
+## Mutation の作成
+
+1. 一覧を取得できることがわかったので`/src/pages/api/todos/insert.ts`ファイル、`/src/pages/api/todos/delete.ts`ファイルを作成し追加・削除のエンドポイントを作成して、追加・削除の処理を実装
 
 ## Getting Started
 
@@ -68,3 +72,5 @@ https://qiita.com/dshukertjr/items/be036d38f77b1359f4be
 https://reffect.co.jp/react/next-js-api-route
 
 https://qiita.com/wafuwafu13/items/0f4230a5301fb44dd796
+
+https://qiita.com/dshukertjr/items/be036d38f77b1359f4be

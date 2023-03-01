@@ -6,34 +6,27 @@ import TodoList from "@/components/TodoList";
 export default function Home() {
   const [text, setText] = useState<string>("");
   const [todos, setTodos] = useState<Todos>([]);
+  const fetchTodos = async () => {
+    const response = await fetch("/api/todos/list");
+    const data = await response.json();
+    setTodos(data);
+  };
+  const insertTodos = async (text: string) => {
+    await fetch(`/api/todos/insert?text=${text}`);
+  };
+  const deleteTodos = async (id: number) => {
+    await fetch(`/api/todos/delete?id=${id}`);
+  };
   useEffect(() => {
-    const fetchTodos = async () => {
-      const response = await fetch("/api/todos/queries");
-      const data = await response.json();
-      setTodos(data);
-    };
     fetchTodos();
   }, []);
-  const addTodos = (text: string) => {
-    const tempTodos = todos.slice();
-    for (let i = 0; i < tempTodos.length; i++) {
-      tempTodos[i].id = i + 1;
-    }
-    setTodos(tempTodos);
-    setTodos([
-      ...todos,
-      {
-        id: todos.length + 1,
-        text: text,
-      },
-    ]);
+  const addTodos = async (text: string) => {
+    await insertTodos(text);
+    await fetchTodos();
   };
-  const removeTodos = (id: number) => {
-    const tempTodos = todos.filter((item) => item.id !== id).slice();
-    for (let i = 0; i < tempTodos.length; i++) {
-      tempTodos[i].id = i + 1;
-    }
-    setTodos(tempTodos);
+  const removeTodos = async (id: number) => {
+    await deleteTodos(id);
+    await fetchTodos();
   };
 
   return (
@@ -45,9 +38,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="h-screen w-screen flex items-center justify-center">
-        {/* <ApolloProvider client={client}>
-          <Hoge />
-        </ApolloProvider> */}
         <div className="h-100 w-full flex items-center justify-center">
           <div className="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4">
             <div className="mb-4">

@@ -13,7 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n    query HogeQuery {\n      todosCollection {\n        edges {\n          node {\n            id\n            text\n          }\n        }   \n      }\n    }\n": types.HogeQueryDocument,
+    "\n    query TodoQuery {\n      todosCollection {\n        edges {\n          node {\n            id\n            text\n          }\n        }   \n      }\n    }\n": types.TodoQueryDocument,
+    "\n    mutation TodoInsertMutation($objects: [todosInsertInput!]!) {\n      insertIntotodosCollection(objects: $objects) {\n        records {\n          text\n        }\n      }\n    }\n": types.TodoInsertMutationDocument,
+    "\n    mutation TodoDeleteMutation($id: Int!) {\n      deleteFromtodosCollection(filter: {id: {eq: $id}}) {\n          records {\n            text\n        }\n      }\n    }\n": types.TodoDeleteMutationDocument,
 };
 
 /**
@@ -33,7 +35,15 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    query HogeQuery {\n      todosCollection {\n        edges {\n          node {\n            id\n            text\n          }\n        }   \n      }\n    }\n"): (typeof documents)["\n    query HogeQuery {\n      todosCollection {\n        edges {\n          node {\n            id\n            text\n          }\n        }   \n      }\n    }\n"];
+export function gql(source: "\n    query TodoQuery {\n      todosCollection {\n        edges {\n          node {\n            id\n            text\n          }\n        }   \n      }\n    }\n"): (typeof documents)["\n    query TodoQuery {\n      todosCollection {\n        edges {\n          node {\n            id\n            text\n          }\n        }   \n      }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation TodoInsertMutation($objects: [todosInsertInput!]!) {\n      insertIntotodosCollection(objects: $objects) {\n        records {\n          text\n        }\n      }\n    }\n"): (typeof documents)["\n    mutation TodoInsertMutation($objects: [todosInsertInput!]!) {\n      insertIntotodosCollection(objects: $objects) {\n        records {\n          text\n        }\n      }\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation TodoDeleteMutation($id: Int!) {\n      deleteFromtodosCollection(filter: {id: {eq: $id}}) {\n          records {\n            text\n        }\n      }\n    }\n"): (typeof documents)["\n    mutation TodoDeleteMutation($id: Int!) {\n      deleteFromtodosCollection(filter: {id: {eq: $id}}) {\n          records {\n            text\n        }\n      }\n    }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
