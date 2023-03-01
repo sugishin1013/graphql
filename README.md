@@ -1,6 +1,6 @@
 # GraphQL
 
-Supabase 上で作成したデータに GraphQL API でアクセスしてみました。
+Supabase 上で作成したデータに GraphQL API でアクセスしてみる
 
 [React.js](https://ja.reactjs.org/) + [Next.js](https://nextjs.org/) + [TypeScript](https://www.typescriptlang.org/ja/) + [Tailwind CSS](https://tailwindcss.com/) + [Apollo Client](https://www.apollographql.com/docs/react/) + [Supabase](https://supabase.com/)
 
