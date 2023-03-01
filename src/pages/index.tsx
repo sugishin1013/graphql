@@ -1,13 +1,19 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Head from "next/head";
-import { useState } from "react";
-import { todosQuery } from "../constants";
+import { useState, useEffect } from "react";
 import { Todos } from "../types/types";
 import TodoList from "@/components/TodoList";
 
 export default function Home() {
   const [text, setText] = useState<string>("");
   const [todos, setTodos] = useState<Todos>([]);
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const response = await fetch("/api/todos/queries");
+      const data = await response.json();
+      setTodos(data);
+    };
+    fetchTodos();
+  }, []);
   const addTodos = (text: string) => {
     const tempTodos = todos.slice();
     for (let i = 0; i < tempTodos.length; i++) {
@@ -30,25 +36,6 @@ export default function Home() {
     setTodos(tempTodos);
   };
 
-  const headers = {
-    apikey: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-    authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-  };
-
-  const client = new ApolloClient({
-    uri: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/graphql/v1`,
-    cache: new InMemoryCache(),
-    headers,
-  });
-
-  client.query({ query: todosQuery }).then((result) =>
-    console.log(
-      result.data.todosCollection!.edges.map((item: any) => ({
-        id: item.node.id,
-        text: item.node.text,
-      }))
-    )
-  );
   return (
     <>
       <Head>

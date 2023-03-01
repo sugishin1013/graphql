@@ -35,6 +35,14 @@ values
 
 3. 上記 Typescript 用の型を自動作成し、GraphQL API でダミーデータを取得できることを確認
 
+## API Routes の使用
+
+今回は Supabase（外部サービス）の API を使用するため、API キーの秘匿性のためにも「API Routes」機能を採用
+
+1. `/src/pages/api/todos/queries.ts`ファイルを作成し、GraphQL API の接続テスト用の処理をこのファイルに移行
+
+2. `http://localhost:3000/api/todos/queries`にブラウザ上でアクセスし、DB に登録したダミーデータが取得できることを確認
+
 ## Getting Started
 
 First, run the development server:
@@ -56,3 +64,7 @@ https://tailwindcomponents.com/component/todo-list-app
 ## References
 
 https://qiita.com/dshukertjr/items/be036d38f77b1359f4be
+
+https://reffect.co.jp/react/next-js-api-route
+
+https://qiita.com/wafuwafu13/items/0f4230a5301fb44dd796
