@@ -1,8 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Head from "next/head";
 import { useState } from "react";
-import Hoge from "../components/Hoge";
-import { hogeQuery } from "../constants";
+import { todosQuery } from "../constants";
 import { Todos } from "../types/types";
 import TodoList from "@/components/TodoList";
 
@@ -31,24 +30,25 @@ export default function Home() {
     setTodos(tempTodos);
   };
 
-  // const headers = {
-  //   apikey: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-  //   authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-  // };
+  const headers = {
+    apikey: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+    authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+  };
 
-  // const client = new ApolloClient({
-  //   uri: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/graphql/v1`,
-  //   cache: new InMemoryCache(),
-  //   headers,
-  // });
+  const client = new ApolloClient({
+    uri: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/graphql/v1`,
+    cache: new InMemoryCache(),
+    headers,
+  });
 
-  // client
-  //   .query({ query: hogeQuery })
-  //   .then((result) =>
-  //     console.log(
-  //       result.data.hogeCollection!.edges.map((item: any) => item.node.name)
-  //     )
-  //   );
+  client.query({ query: todosQuery }).then((result) =>
+    console.log(
+      result.data.todosCollection!.edges.map((item: any) => ({
+        id: item.node.id,
+        text: item.node.text,
+      }))
+    )
+  );
   return (
     <>
       <Head>

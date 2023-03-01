@@ -108,10 +108,16 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Deletes zero or more records from the `hoge` collection */
   deleteFromhogeCollection: HogeDeleteResponse;
+  /** Deletes zero or more records from the `todos` collection */
+  deleteFromtodosCollection: TodosDeleteResponse;
   /** Adds one or more `hoge` records to the collection */
   insertIntohogeCollection?: Maybe<HogeInsertResponse>;
+  /** Adds one or more `todos` records to the collection */
+  insertIntotodosCollection?: Maybe<TodosInsertResponse>;
   /** Updates zero or more records in the `hoge` collection */
   updatehogeCollection: HogeUpdateResponse;
+  /** Updates zero or more records in the `todos` collection */
+  updatetodosCollection: TodosUpdateResponse;
 };
 
 
@@ -123,8 +129,21 @@ export type MutationDeleteFromhogeCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationDeleteFromtodosCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<TodosFilter>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationInsertIntohogeCollectionArgs = {
   objects: Array<HogeInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntotodosCollectionArgs = {
+  objects: Array<TodosInsertInput>;
 };
 
 
@@ -133,6 +152,14 @@ export type MutationUpdatehogeCollectionArgs = {
   atMost?: Scalars['Int'];
   filter?: InputMaybe<HogeFilter>;
   set: HogeUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdatetodosCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<TodosFilter>;
+  set: TodosUpdateInput;
 };
 
 export type Node = {
@@ -167,6 +194,8 @@ export type Query = {
   hogeCollection?: Maybe<HogeConnection>;
   /** Retrieve a record by its `ID` */
   node?: Maybe<Node>;
+  /** A pagable collection of type `todos` */
+  todosCollection?: Maybe<TodosConnection>;
 };
 
 
@@ -184,6 +213,17 @@ export type QueryHogeCollectionArgs = {
 /** The root type for querying data */
 export type QueryNodeArgs = {
   nodeId: Scalars['ID'];
+};
+
+
+/** The root type for querying data */
+export type QueryTodosCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<TodosFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<TodosOrderBy>>;
 };
 
 /** Boolean expression comparing fields on type "String" */
@@ -281,10 +321,75 @@ export type HogeUpdateResponse = {
   records: Array<Hoge>;
 };
 
+export type Todos = Node & {
+  __typename?: 'todos';
+  id: Scalars['Int'];
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID'];
+  text?: Maybe<Scalars['String']>;
+};
+
+export type TodosConnection = {
+  __typename?: 'todosConnection';
+  edges: Array<TodosEdge>;
+  pageInfo: PageInfo;
+};
+
+export type TodosDeleteResponse = {
+  __typename?: 'todosDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<Todos>;
+};
+
+export type TodosEdge = {
+  __typename?: 'todosEdge';
+  cursor: Scalars['String'];
+  node: Todos;
+};
+
+export type TodosFilter = {
+  id?: InputMaybe<IntFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  text?: InputMaybe<StringFilter>;
+};
+
+export type TodosInsertInput = {
+  id?: InputMaybe<Scalars['Int']>;
+  text?: InputMaybe<Scalars['String']>;
+};
+
+export type TodosInsertResponse = {
+  __typename?: 'todosInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<Todos>;
+};
+
+export type TodosOrderBy = {
+  id?: InputMaybe<OrderByDirection>;
+  text?: InputMaybe<OrderByDirection>;
+};
+
+export type TodosUpdateInput = {
+  id?: InputMaybe<Scalars['Int']>;
+  text?: InputMaybe<Scalars['String']>;
+};
+
+export type TodosUpdateResponse = {
+  __typename?: 'todosUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<Todos>;
+};
+
 export type HogeQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HogeQueryQuery = { __typename?: 'Query', hogeCollection?: { __typename?: 'hogeConnection', edges: Array<{ __typename?: 'hogeEdge', node: { __typename?: 'hoge', id: number, name?: string | null } }> } | null };
+export type HogeQueryQuery = { __typename?: 'Query', todosCollection?: { __typename?: 'todosConnection', edges: Array<{ __typename?: 'todosEdge', node: { __typename?: 'todos', id: number, text?: string | null } }> } | null };
 
 
-export const HogeQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HogeQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hogeCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<HogeQueryQuery, HogeQueryQueryVariables>;
+export const HogeQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HogeQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todosCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]}}]}}]}}]} as unknown as DocumentNode<HogeQueryQuery, HogeQueryQueryVariables>;

@@ -12,9 +12,28 @@ Supabase 上で作成したデータに GraphQL API でアクセスしてみま�
 
 3. Next.js 上で[Get started with Apollo Client](https://www.apollographql.com/docs/react/get-started)のドキュメントのテストコードを記述し、データが取得できることを確認
 
-## todo リスト作成
+## todo リスト UI と DB データ 作成
 
 1. シンプルな todo リストの mock を作成
+
+2. 上記 mock のデータに合わせて Supabase 上でテーブルを作成、ダミーデータも insert
+
+```
+create table todos (
+    id integer primary key,
+    text text
+);
+```
+
+```
+insert into public.todos
+values
+  (1,'予定1'),
+  (2,'予定2'),
+  (3,'予定3');
+```
+
+3. 上記 Typescript 用の型を自動作成し、GraphQL API でダミーデータを取得できることを確認
 
 ## Getting Started
 
