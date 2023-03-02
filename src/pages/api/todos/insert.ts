@@ -7,6 +7,7 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   const { text } = req.query;
+  const value = Array.isArray(text) ? text[0] : text;
 
   const headers = {
     apikey: `${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
@@ -21,7 +22,7 @@ export default async function handler(
   });
 
   const response = await client.mutate({
-    variables: { objects: [{ text }] },
+    variables: { objects: [{ text: value }] },
     mutation: todosInsertMutation,
   });
   res.status(200).json(response);
