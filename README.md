@@ -1,6 +1,8 @@
 # GraphQL
 
-Supabase 上で作成したデータに GraphQL API でアクセスしてみる
+Supabase 上で作成したデータに GraphQL API を介して Todo リストを作成してみた
+
+https://graphql-iota-gray.vercel.app/
 
 [React.js](https://ja.reactjs.org/) + [Next.js](https://nextjs.org/) + [TypeScript](https://www.typescriptlang.org/ja/) + [Tailwind CSS](https://tailwindcss.com/) + [Apollo Client](https://www.apollographql.com/docs/react/) + [Supabase](https://supabase.com/)
 
@@ -20,7 +22,7 @@ Supabase 上で作成したデータに GraphQL API でアクセスしてみる
 
 ```
 create table todos (
-    id integer generated always as identity not null,
+    id integer primary key generated always as identity not null,
     text text
 );
 ```
@@ -47,6 +49,34 @@ values
 
 1. 一覧を取得できることがわかったので`/src/pages/api/todos/insert.ts`ファイル、`/src/pages/api/todos/delete.ts`ファイルを作成し追加・削除のエンドポイントを作成して、追加・削除の処理を実装
 
+## ローカル DB からリモート DB へのデプロイ
+
+1. 以下のコマンドを実行することでローカルのマイグレーションファイルを元に同じスキーマのテーブルが生成される
+
+```
+supabase db diff todos
+supabase db reset
+supabase link --project-ref <your-project-ref>
+supabase db push
+```
+
+2. ダミーデータを挿入する場合は Supabase のダッシュボードから Insert 文の SQL を実行
+
+## デプロイ
+
+1. vercel にログインして該当のリポジトリをインポート
+
+2. デプロイ時に「Environment Variables」（環境変数）に リモート用の API のエンドポイント、API キーを登録
+
+```
+NEXT_PUBLIC_SUPABASE_URL=<Project URL>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<Project API keys>
+SUPABASE_URL=<Project URL>
+SUPABASE_ANON_KEY=<Project API keys>
+```
+
+\*リモート用の API のエンドポイント、API キーはリモートの該当プロジェクトの`/settings/api`画面から確認
+
 ## Getting Started
 
 First, run the development server:
@@ -72,5 +102,3 @@ https://qiita.com/dshukertjr/items/be036d38f77b1359f4be
 https://reffect.co.jp/react/next-js-api-route
 
 https://qiita.com/wafuwafu13/items/0f4230a5301fb44dd796
-
-https://qiita.com/dshukertjr/items/be036d38f77b1359f4be
